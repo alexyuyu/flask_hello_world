@@ -7,7 +7,12 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     provider = str(os.environ.get('PROVIDER', 'world'))
+    log('Hello '+provider+'!')
     return 'Hello '+provider+'!'
+
+def log(msg):
+    with open('app.log','w') as fileObj:
+        fileObj.write(msg)
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
