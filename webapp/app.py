@@ -7,12 +7,20 @@ app = Flask(__name__)
 @app.route('/')
 def hello():
     provider = str(os.environ.get('PROVIDER', 'world'))
-    log('Hello '+provider+'!')
+    log('Hello '+provider+'!\n')
     return 'Hello '+provider+'!'
 
 def log(msg):
-    with open('app.log','w') as fileObj:
+    print(msg)
+    print(os.path.abspath('.'))
+    fileObj = open(os.path.abspath('.')+'/app.log','a')
+    try:
         fileObj.write(msg)
+	print('after writing ',msg)
+    except:
+        print('got exception!')
+    finally:
+        fileObj.close()
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
